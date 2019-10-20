@@ -23,7 +23,7 @@ The behavior and usage of the functions is explained in the next paragraphs.
 
 ---
 
-A few sentences about the **example code** in `main.c`  
+A few sentences about the **example code** in [`main.c`](main.c)  
 I'm doing some funny business in these examples. Unsigned types get passed to the `signedto...` functions and signed types to the `unsignedto...` functions in order to explain the behavior of these functions.  
 
 `USHRT_MAX` is passed to the `signedto...` function. It has value `65535` in most implementations.
