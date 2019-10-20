@@ -27,7 +27,7 @@ A few sentences about the **example code** in `main.c`
 I'm doing some funny business in these examples. Unsigned types get passed to the `signedto...` functions and signed types to the `unsignedto...` functions in order to explain the behavior of these functions.  
 
 `USHRT_MAX` is passed to the `signedto...` function. It has value `65535` in most implementations.
-This value does perfectly fit into the first parameter, still as a positive value. But since we want to treat it as a signed value of type short, the value shall be casted internally. Thus, the expected output is the converted value of `((short)USHRT_MAX)`, which is `-1` rather than `65535`.  
+This value does perfectly fit into the first parameter, still as a positive value. But since we want to treat it as a signed value of type `short`, the value shall be casted internally. Thus, the expected output is the converted value of `((short)USHRT_MAX)`, which is `-1` rather than `65535`.  
 
 Similarly `SHRT_MIN` is passed to the `unsignedto...` function. It has value `-32768` in most implementations.
 Leading bits get filled with ones if this value is casted for the first parameter. Provided `uintmax_t` has a size of 8, this value would be casted to `18446744073709518848`. But the expected output is the converted value of `((unsigned short)SHRT_MIN)`, which is `32768` in most implementations.  
@@ -37,7 +37,7 @@ The output of the examples is ...
 length: 2       string:-1
 length: 5       string:32768
 ```
-... with a type size of 2 provided for signed/unsigned short.  
+... with a type size of 2 provided for `signed/unsigned short`.  
 Depending on the real size of an unsigned short in your implementation, the output in the second line might be different.  
 
 Well, this is not the intended use as I said in the beginning. Probably you rather want to convert a value using its actual signedness and size like that ...
@@ -58,7 +58,7 @@ These are function-like macros that cast your value into `intmax_t` or `uintmax_
 ---
 
 Speaking of **risks** - these functions are way safer than common `itoa` implementations. But still I can't make them foolproof.  
-- `value` parameter: You can't make much wrong here unless you don't pass the value that you want to convert.  
+- `value` parameter: You can't go wrong here unless you don't pass the value that you want to convert.  
 - `valsize` parameter: The implementation already checks that the size is a power of two and that it doesn't exceed the maximum size for the `value` parameter. But if you pass a size that doesn't fit to your value, the resulting string will not meet your expectations.  
 - `buffer` parameter: If you pass `NULL`, the return value will be zero and `buffer` will not be accessed. If you pass an array with at least one element, the implementation of the functions will always append a terminating null to the string to protect you from reading into invalid memory. Even if the functions fail, the resulting string is null-terminated but has zero length in this case. I can't protect you from passing any random addresses to this parameter though. It's your responsibility to pass either a valid pointer to an array of at least one character length, or a `NULL` pointer.  
 - `bufsize` parameter: If this value is the size of the buffer in characters, the implementation checks whether or not the buffer is large enough for your converted string including the terminating null. If this parameter is greater than `0` the resulting string is always null-terminated. It's your responsibility to pass a value that is less than or equals the real length of your buffer.  
