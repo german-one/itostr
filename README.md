@@ -38,7 +38,7 @@ length: 2       string:-1
 length: 5       string:32768
 ```
 ... with a type size of 2 provided for `signed/unsigned short`.  
-Depending on the real size of an unsigned short in your implementation, the output in the second line might be different.  
+Depending on the real size of an `unsigned short` in your implementation, the output in the second line might be different.  
 
 Well, this is not the intended use as I said in the beginning. Probably you rather want to convert a value using its actual signedness and size like that ...
 ```
