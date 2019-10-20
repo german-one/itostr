@@ -5,7 +5,8 @@
 
 **The aim** of this little library is to provide functions that convert integral values to strings using a numerical base. This is similar to what `itoa` already does. But `itoa` is no C-standard function, so don't rely on its existence in all implementations. And there are some deficiencies that I try to overcome in my library functions:
 - convert values of any integer type  
-- check whether `NULL` was passed and the buffer has a sufficient size  
+- check whether `NULL` was passed  
+- check whether the buffer has a sufficient size  
 - return a value that indicates whether the conversion failed  
 - use the return value to indicate the length of the resulting string  
 
