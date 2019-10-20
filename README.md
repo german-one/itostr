@@ -18,7 +18,7 @@ We need only two **public functions**. Actually, there are two pairs of function
 - function `unsignedtostr`: convert an unsigned value to an ASCII string  
 - function `unsignedtowcs`: convert an unsigned value to a wide string  
 
-Find the reference of the required arguments in the `itostr.h` file.
+Find the reference of the required arguments in the [`itostr.h`](itostr.h) file.  
 The behavior and usage of the functions is explained in the next paragraphs.
 
 ---
