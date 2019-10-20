@@ -33,7 +33,7 @@ size_t signedtostr(intmax_t value, size_t valsize, char *buffer, size_t bufsize,
   }
   uintmax_t signmask = UINTMAX_C(128) << ((--valsize) << 3), typemask = (signmask << 1) - 1; // signmask: one bit set at the MSB position of the passed type, typemask: all bits set in the range of the passed type
   return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0) // decide if the value shall be unsigned or negative, mask out all bits which exceed the passed type size using one-bits (negative value) or zero-bits (unsigned value)
-         ? signeddecstrconv_impl((uintmax_t)value | ~typemask, buffer, bufsize)
+         ? signeddecstrconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize)
          : unsignedstrconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
 }
 
@@ -48,7 +48,7 @@ size_t signedtowcs(intmax_t value, size_t valsize, wchar_t *buffer, size_t bufsi
   }
   uintmax_t signmask = UINTMAX_C(128) << ((--valsize) << 3), typemask = (signmask << 1) - 1;
   return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0)
-         ? signeddecwcsconv_impl((uintmax_t)value | ~typemask, buffer, bufsize)
+         ? signeddecwcsconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize)
          : unsignedwcsconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
 }
 
