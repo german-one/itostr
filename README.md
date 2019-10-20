@@ -22,7 +22,7 @@ The behavior and usage of the functions is explained in the next paragraphs.
 
 ---
 
-A few sentences about the **example code** in `main.c`
+A few sentences about the **example code** in `main.c`  
 I'm doing some funny business in these examples. Unsigned types get passed to the `signedto...` functions and signed types to the `unsignedto...` functions in order to explain the behavior of these functions.  
 
 `USHRT_MAX` is passed to the `signedto...` function. It has value `65535` in most implementations.
@@ -67,7 +67,7 @@ Speaking of **risks** - these functions are way safer than common `itoa` impleme
 
 ---
 
-All files in this software package under MIT license.  
+All files in this software package under **MIT license**.  
 Copyright (c) 2019 Steffen Illhardt
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
