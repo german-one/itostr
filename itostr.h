@@ -16,8 +16,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifndef ITOSTR_H_INCLUDED__
 #define ITOSTR_H_INCLUDED__
-#if (-1) != (~0) // Binary operations used rely on two´s complement (rather than one´s complement or sign-magnitude).
-#error "The implementation doesn´t use two´s complement for signed number representation."
+#if (-1) != (~0) // Binary operations used rely on twoÂ´s complement (rather than oneÂ´s complement or sign-magnitude).
+#error "The implementation doesnÂ´t use twoÂ´s complement for signed number representation."
 #endif
 
 #include <stddef.h>
@@ -45,7 +45,7 @@ extern "C" {
  * \param bufsize Size of the array given by the buffer parameter in characters.
  * \param base    Numerical base (between 2 and 36) used to represent the value as a string.
  * \return size_t Length of the resulting string without the terminating null character, or 0 if the function fails. */
-size_t signedtostr(intmax_t value, size_t valsize, char *buffer, size_t bufsize, int base);
+size_t signedtostr(intmax_t value, size_t valsize, char* buffer, size_t bufsize, int base);
 
 /** \brief Convert a signed integer to a null-terminated string of wchar_t using the specified base.
  *         If base is 10 and value is negative, the resulting string is preceded with a minus sign.
@@ -56,7 +56,7 @@ size_t signedtostr(intmax_t value, size_t valsize, char *buffer, size_t bufsize,
  * \param bufsize Size of the array given by the buffer parameter in wide characters.
  * \param base    Numerical base (between 2 and 36) used to represent the value as a string.
  * \return size_t Length of the resulting string without the terminating null character, or 0 if the function fails. */
-size_t signedtowcs(intmax_t value, size_t valsize, wchar_t *buffer, size_t bufsize, int base);
+size_t signedtowcs(intmax_t value, size_t valsize, wchar_t* buffer, size_t bufsize, int base);
 
 // UNSIGNED
 /** \brief Convert an unsigned integer to a null-terminated string of char using the specified base.
@@ -66,7 +66,7 @@ size_t signedtowcs(intmax_t value, size_t valsize, wchar_t *buffer, size_t bufsi
  * \param bufsize Size of the array given by the buffer parameter in characters.
  * \param base    Numerical base (between 2 and 36) used to represent the value as a string.
  * \return size_t Length of the resulting string without the terminating null character, or 0 if the function fails. */
-size_t unsignedtostr(uintmax_t value, size_t valsize, char *buffer, size_t bufsize, int base);
+size_t unsignedtostr(uintmax_t value, size_t valsize, char* buffer, size_t bufsize, int base);
 
 /** \brief Convert an unsigned integer to a null-terminated string of wchar_t using the specified base.
  * \param value   Value to be converted to a string. It is treated as an unsigned type of the size given by the valsize parameter.
@@ -75,7 +75,7 @@ size_t unsignedtostr(uintmax_t value, size_t valsize, char *buffer, size_t bufsi
  * \param bufsize Size of the array given by the buffer parameter in wide characters.
  * \param base    Numerical base (between 2 and 36) used to represent the value as a string.
  * \return size_t Length of the resulting string without the terminating null character, or 0 if the function fails. */
-size_t unsignedtowcs(uintmax_t value, size_t valsize, wchar_t *buffer, size_t bufsize, int base);
+size_t unsignedtowcs(uintmax_t value, size_t valsize, wchar_t* buffer, size_t bufsize, int base);
 
 #ifdef __cplusplus
 }
