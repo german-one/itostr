@@ -16,13 +16,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "itostr.h"
 
-size_t signeddecstrconv_impl(intmax_t value, char *buffer, size_t bufsize);
-size_t signeddecwcsconv_impl(intmax_t value, wchar_t *buffer, size_t bufsize);
-size_t unsignedstrconv_impl(uintmax_t value, char *buffer, size_t bufsize, int base);
-size_t unsignedwcsconv_impl(uintmax_t value, wchar_t *buffer, size_t bufsize, int base);
+size_t signeddecstrconv_impl(intmax_t value, char* buffer, size_t bufsize);
+size_t signeddecwcsconv_impl(intmax_t value, wchar_t* buffer, size_t bufsize);
+size_t unsignedstrconv_impl(uintmax_t value, char* buffer, size_t bufsize, int base);
+size_t unsignedwcsconv_impl(uintmax_t value, wchar_t* buffer, size_t bufsize, int base);
 
 /* ########## public functions ########## */
-size_t signedtostr(intmax_t value, size_t valsize, char *buffer, size_t bufsize, int base)
+size_t signedtostr(intmax_t value, size_t valsize, char* buffer, size_t bufsize, int base)
 {
   if (buffer == (char*)NULL || bufsize == (size_t)0)
     return (size_t)0;
@@ -31,13 +31,13 @@ size_t signedtostr(intmax_t value, size_t valsize, char *buffer, size_t bufsize,
     *buffer = '0';
     return (size_t)0;
   }
-  uintmax_t signmask = UINTMAX_C(128) << ((valsize-1) << 3), typemask = (signmask << 1) - 1; // signmask: one bit set at the MSB position of the passed type, typemask: all bits set in the range of the passed type
-  return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0) // decide if the value shall be unsigned or negative, mask out all bits which exceed the passed type size using one-bits (negative value) or zero-bits (unsigned value)
-         ? signeddecstrconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize)
-         : unsignedstrconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
+  uintmax_t signmask = UINTMAX_C(128) << ((valsize - 1) << 3), typemask = (signmask << 1) - 1; // signmask: one bit set at the MSB position of the passed type, typemask: all bits set in the range of the passed type
+  return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0) ? // decide if the value shall be unsigned or negative, mask out all bits which exceed the passed type size using one-bits (negative value) or zero-bits (unsigned value)
+           signeddecstrconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize) :
+           unsignedstrconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
 }
 
-size_t signedtowcs(intmax_t value, size_t valsize, wchar_t *buffer, size_t bufsize, int base)
+size_t signedtowcs(intmax_t value, size_t valsize, wchar_t* buffer, size_t bufsize, int base)
 {
   if (buffer == (wchar_t*)NULL || bufsize == (size_t)0)
     return (size_t)0;
@@ -46,13 +46,11 @@ size_t signedtowcs(intmax_t value, size_t valsize, wchar_t *buffer, size_t bufsi
     *buffer = L'0';
     return (size_t)0;
   }
-  uintmax_t signmask = UINTMAX_C(128) << ((valsize-1) << 3), typemask = (signmask << 1) - 1;
-  return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0)
-         ? signeddecwcsconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize)
-         : unsignedwcsconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
+  uintmax_t signmask = UINTMAX_C(128) << ((valsize - 1) << 3), typemask = (signmask << 1) - 1;
+  return base == 10 && ((uintmax_t)value & signmask) != UINTMAX_C(0) ? signeddecwcsconv_impl((intmax_t)((uintmax_t)value | ~typemask), buffer, bufsize) : unsignedwcsconv_impl((uintmax_t)value & typemask, buffer, bufsize, base);
 }
 
-size_t unsignedtostr(uintmax_t value, size_t valsize, char *buffer, size_t bufsize, int base)
+size_t unsignedtostr(uintmax_t value, size_t valsize, char* buffer, size_t bufsize, int base)
 {
   if (buffer == (char*)NULL || bufsize == (size_t)0)
     return (size_t)0;
@@ -61,10 +59,10 @@ size_t unsignedtostr(uintmax_t value, size_t valsize, char *buffer, size_t bufsi
     *buffer = '0';
     return (size_t)0;
   }
-  return unsignedstrconv_impl(value & ((UINTMAX_C(256) << ((valsize-1) << 3)) - 1), buffer, bufsize, base);
+  return unsignedstrconv_impl(value & ((UINTMAX_C(256) << ((valsize - 1) << 3)) - 1), buffer, bufsize, base);
 }
 
-size_t unsignedtowcs(uintmax_t value, size_t valsize, wchar_t *buffer, size_t bufsize, int base)
+size_t unsignedtowcs(uintmax_t value, size_t valsize, wchar_t* buffer, size_t bufsize, int base)
 {
   if (buffer == (wchar_t*)NULL || bufsize == (size_t)0)
     return (size_t)0;
@@ -73,11 +71,11 @@ size_t unsignedtowcs(uintmax_t value, size_t valsize, wchar_t *buffer, size_t bu
     *buffer = L'0';
     return (size_t)0;
   }
-  return unsignedwcsconv_impl(value & ((UINTMAX_C(256) << ((valsize-1) << 3)) - 1), buffer, bufsize, base);
+  return unsignedwcsconv_impl(value & ((UINTMAX_C(256) << ((valsize - 1) << 3)) - 1), buffer, bufsize, base);
 }
 
 /* ########## private worker functions that perform the actual conversion ########## */
-size_t signeddecstrconv_impl(intmax_t value, char *buffer, size_t bufsize)
+size_t signeddecstrconv_impl(intmax_t value, char* buffer, size_t bufsize)
 { // relies on prior verification that value is negative, buffer != NULL, bufsize != 0, and base is 10
   size_t length = (size_t)0;
   if (bufsize < (size_t)3 || (length = unsignedstrconv_impl(UINTMAX_C(0) - value, buffer + 1, --bufsize, 10)) == (size_t)0)
@@ -89,7 +87,7 @@ size_t signeddecstrconv_impl(intmax_t value, char *buffer, size_t bufsize)
   return ++length;
 }
 
-size_t signeddecwcsconv_impl(intmax_t value, wchar_t *buffer, size_t bufsize)
+size_t signeddecwcsconv_impl(intmax_t value, wchar_t* buffer, size_t bufsize)
 {
   size_t length = (size_t)0;
   if (bufsize < (size_t)3 || (length = unsignedwcsconv_impl(UINTMAX_C(0) - value, buffer + 1, --bufsize, 10)) == (size_t)0)
@@ -101,7 +99,7 @@ size_t signeddecwcsconv_impl(intmax_t value, wchar_t *buffer, size_t bufsize)
   return ++length;
 }
 
-size_t unsignedstrconv_impl(uintmax_t value, char *buffer, size_t bufsize, int base)
+size_t unsignedstrconv_impl(uintmax_t value, char* buffer, size_t bufsize, int base)
 { // relies on prior verification that buffer != NULL and bufsize != 0
   static const char charcodes[] = "0123456789abcdefghijklmnopqrstuvwxyz";
   if (base < 2 || base > 36) // check if we got a qualified base
@@ -109,7 +107,7 @@ size_t unsignedstrconv_impl(uintmax_t value, char *buffer, size_t bufsize, int b
     *buffer = '\0';
     return (size_t)0;
   }
-  char *end = buffer; // pointer to the position to write
+  char* end = buffer; // pointer to the position to write
   do
   {
     if (--bufsize == (size_t)0) // decrement the remaining buffer size, check if we still have enough free space for the terminating null
@@ -132,7 +130,7 @@ size_t unsignedstrconv_impl(uintmax_t value, char *buffer, size_t bufsize, int b
   return length;
 }
 
-size_t unsignedwcsconv_impl(uintmax_t value, wchar_t *buffer, size_t bufsize, int base)
+size_t unsignedwcsconv_impl(uintmax_t value, wchar_t* buffer, size_t bufsize, int base)
 {
   static const wchar_t charcodes[] = L"0123456789abcdefghijklmnopqrstuvwxyz";
   if (base < 2 || base > 36)
@@ -140,7 +138,7 @@ size_t unsignedwcsconv_impl(uintmax_t value, wchar_t *buffer, size_t bufsize, in
     *buffer = L'\0';
     return (size_t)0;
   }
-  wchar_t *end = buffer;
+  wchar_t* end = buffer;
   do
   {
     if (--bufsize == (size_t)0)
